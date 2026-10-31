@@ -13,10 +13,10 @@ const AboutSection = () => {
   const isInView = useInView(ref, { once: true, margin: '-100px' });
 
   const highlights = [
-    { icon: Code2, label: 'Backend Focus', desc: 'API design & sistem arsitektur' },
-    { icon: Layers, label: 'Terstruktur', desc: 'Metodologi pengembangan yang rapi' },
-    { icon: BookOpen, label: 'Mahasiswa S1', desc: 'Rekayasa Perangkat Lunak' },
-    { icon: Sparkles, label: 'Quality First', desc: 'Testing & code quality selalu utama' },
+    { icon: Code2, label: 'Full Stack Developer', desc: 'Frontend, backend & web development' },
+    { icon: Layers, label: 'System Development', desc: 'API design, database & system architecture' },
+    { icon: Coffee, label: 'Barista & Coffee Enthusiast', desc: 'Coffee brewing & customer service' },
+    { icon: Sparkles, label: 'Creative & Adaptable', desc: 'Problem solving, teamwork & creativity' },
   ];
 
   return (

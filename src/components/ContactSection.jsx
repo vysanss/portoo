@@ -1,7 +1,7 @@
 import { useState, useRef } from 'react';
 import { motion } from 'framer-motion';
 import { useInView } from 'framer-motion';
-import { Send, Mail, CheckCircle, AlertCircle, Loader2, Phone } from 'lucide-react';
+import { Send, Mail, CheckCircle, AlertCircle, Loader2 } from 'lucide-react';
 
 // ── Social link data ───────────────────────────────────────────────
 const socialLinks = [
@@ -64,9 +64,7 @@ const socialLinks = [
 ];
 
 // ── Form helpers ───────────────────────────────────────────────────
-const FORMSPREE_ENDPOINT = 'https://formspree.io/f/hmluthfihm@gmail.com'; // Will use mailto fallback
-
-const inputClass = `w-full px-4 py-3 rounded-xl border text-sm font-medium
+const inputClass = `w-full px-4 py-3 rounded-xl border text-base sm:text-sm font-medium
   bg-white dark:bg-slate-800/60 text-slate-900 dark:text-white
   placeholder:text-slate-400 dark:placeholder:text-slate-500
   border-slate-200 dark:border-slate-700
@@ -103,7 +101,6 @@ const ContactSection = () => {
     if (Object.keys(errs).length > 0) { setErrors(errs); return; }
     setStatus('sending');
     try {
-      // Send via Formspree (free tier, no backend needed)
       const res = await fetch('https://formspree.io/f/xwpbqrzb', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
@@ -119,13 +116,11 @@ const ContactSection = () => {
         setStatus('success');
         setForm({ name: '', email: '', message: '' });
       } else {
-        // Fallback: open mailto
         const mailtoUrl = `mailto:hmluthfihm@gmail.com?subject=${encodeURIComponent(`[Portfolio] Pesan dari ${form.name}`)}&body=${encodeURIComponent(`Nama: ${form.name}\nEmail: ${form.email}\n\n${form.message}`)}`;
         window.location.href = mailtoUrl;
         setStatus('success');
       }
     } catch {
-      // Network error fallback
       const mailtoUrl = `mailto:hmluthfihm@gmail.com?subject=${encodeURIComponent(`[Portfolio] Pesan dari ${form.name}`)}&body=${encodeURIComponent(`Nama: ${form.name}\nEmail: ${form.email}\n\n${form.message}`)}`;
       window.location.href = mailtoUrl;
       setStatus('success');
@@ -138,7 +133,7 @@ const ContactSection = () => {
   };
 
   return (
-    <section id="contact" className="py-24 px-4 bg-slate-50/50 dark:bg-slate-900/50">
+    <section id="contact" className="py-20 sm:py-24 px-4 bg-slate-50/60 dark:bg-slate-900/50 overflow-hidden">
       <div className="max-w-5xl mx-auto">
         <motion.div
           ref={ref}
@@ -147,23 +142,23 @@ const ContactSection = () => {
           variants={{ visible: { transition: { staggerChildren: 0.12 } } }}
         >
           {/* Header */}
-          <motion.div variants={fadeUp} className="text-center mb-16">
-            <p className="text-sm font-semibold tracking-widest uppercase text-violet-600 dark:text-violet-400 mb-3">
+          <motion.div variants={fadeUp} className="text-center mb-12 sm:mb-16">
+            <p className="text-xs sm:text-sm font-semibold tracking-widest uppercase text-violet-600 dark:text-violet-400 mb-2 sm:mb-3">
               Hubungi Saya
             </p>
-            <h2 className="text-4xl sm:text-5xl font-bold text-slate-900 dark:text-white mb-4">
+            <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-slate-900 dark:text-white mb-3 sm:mb-4">
               Let's Work Together
             </h2>
-            <div className="w-16 h-1 bg-gradient-to-r from-violet-600 to-cyan-500 rounded-full mx-auto mb-5" />
-            <p className="text-slate-600 dark:text-slate-400 max-w-lg mx-auto">
-              Ada proyek menarik? Atau hanya ingin menyapa? Jangan ragu untuk menghubungi saya.
+            <div className="w-16 h-1 bg-gradient-to-r from-violet-600 to-cyan-500 rounded-full mx-auto mb-4" />
+            <p className="text-sm sm:text-base text-slate-600 dark:text-slate-400 max-w-lg mx-auto">
+              Ada proyek menarik, kolaborasi startup, atau peluang kerja sama? Jangan ragu untuk menghubungi saya.
             </p>
           </motion.div>
 
-          <div className="grid lg:grid-cols-5 gap-10">
+          <div className="grid grid-cols-1 lg:grid-cols-5 gap-8 lg:gap-10">
             {/* Social Links */}
             <motion.div variants={fadeUp} className="lg:col-span-2 flex flex-col gap-3">
-              <h3 className="text-lg font-bold text-slate-900 dark:text-white mb-1">Find me on</h3>
+              <h3 className="text-base sm:text-lg font-bold text-slate-900 dark:text-white mb-1">Find me on</h3>
               {socialLinks.map(({ icon: Icon, label, value, href, color, bg }) => (
                 <motion.a
                   key={label}
@@ -171,14 +166,14 @@ const ContactSection = () => {
                   target={href.startsWith('mailto') ? '_self' : '_blank'}
                   rel="noopener noreferrer"
                   whileHover={{ x: 4 }}
-                  className={`flex items-center gap-3 p-3.5 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800/60 text-slate-600 dark:text-slate-400 ${color} ${bg} transition-all duration-200 group`}
+                  className={`flex items-center gap-3 p-3.5 rounded-2xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800/60 text-slate-600 dark:text-slate-400 ${color} ${bg} transition-all duration-200 group`}
                 >
-                  <div className="w-9 h-9 rounded-lg bg-slate-100 dark:bg-slate-700 flex items-center justify-center flex-shrink-0 group-hover:scale-110 transition-transform">
+                  <div className="w-9 h-9 rounded-xl bg-slate-100 dark:bg-slate-700 flex items-center justify-center flex-shrink-0 group-hover:scale-110 transition-transform">
                     <Icon />
                   </div>
                   <div className="min-w-0">
                     <p className="text-xs text-slate-400 dark:text-slate-500 font-medium">{label}</p>
-                    <p className="text-sm font-semibold truncate">{value}</p>
+                    <p className="text-xs sm:text-sm font-semibold truncate">{value}</p>
                   </div>
                 </motion.a>
               ))}
@@ -186,10 +181,10 @@ const ContactSection = () => {
 
             {/* Contact Form */}
             <motion.div variants={fadeUp} className="lg:col-span-3">
-              <div className="p-6 sm:p-8 rounded-2xl bg-white dark:bg-slate-800/60 border border-slate-200 dark:border-slate-700 shadow-sm">
+              <div className="p-5 sm:p-8 rounded-3xl bg-white dark:bg-slate-800/60 border border-slate-200 dark:border-slate-700 shadow-sm">
                 <p className="text-xs text-slate-400 dark:text-slate-500 mb-4 flex items-center gap-1.5">
-                  <Mail size={12} />
-                  Pesan akan dikirim langsung ke <span className="font-semibold text-violet-500">hmluthfihm@gmail.com</span>
+                  <Mail size={12} className="flex-shrink-0" />
+                  <span>Pesan akan dikirim langsung ke <span className="font-semibold text-violet-500">hmluthfihm@gmail.com</span></span>
                 </p>
 
                 {status === 'success' ? (
@@ -213,23 +208,23 @@ const ContactSection = () => {
                     </button>
                   </motion.div>
                 ) : (
-                  <form onSubmit={handleSubmit} noValidate className="space-y-5">
+                  <form onSubmit={handleSubmit} noValidate className="space-y-4 sm:space-y-5">
                     <div>
-                      <label className="block text-sm font-semibold text-slate-700 dark:text-slate-300 mb-1.5">Nama</label>
+                      <label className="block text-xs sm:text-sm font-semibold text-slate-700 dark:text-slate-300 mb-1.5">Nama</label>
                       <input type="text" name="name" value={form.name} onChange={handleChange}
                         placeholder="John Doe"
                         className={`${inputClass} ${errors.name ? 'border-red-400 focus:ring-red-400' : ''}`} />
                       {errors.name && <p className="mt-1.5 text-xs text-red-500 flex items-center gap-1"><AlertCircle size={12} />{errors.name}</p>}
                     </div>
                     <div>
-                      <label className="block text-sm font-semibold text-slate-700 dark:text-slate-300 mb-1.5">Email</label>
+                      <label className="block text-xs sm:text-sm font-semibold text-slate-700 dark:text-slate-300 mb-1.5">Email</label>
                       <input type="email" name="email" value={form.email} onChange={handleChange}
                         placeholder="john@example.com"
                         className={`${inputClass} ${errors.email ? 'border-red-400 focus:ring-red-400' : ''}`} />
                       {errors.email && <p className="mt-1.5 text-xs text-red-500 flex items-center gap-1"><AlertCircle size={12} />{errors.email}</p>}
                     </div>
                     <div>
-                      <label className="block text-sm font-semibold text-slate-700 dark:text-slate-300 mb-1.5">Pesan</label>
+                      <label className="block text-xs sm:text-sm font-semibold text-slate-700 dark:text-slate-300 mb-1.5">Pesan</label>
                       <textarea name="message" value={form.message} onChange={handleChange} rows={5}
                         placeholder="Halo! Saya tertarik untuk berkolaborasi..."
                         className={`${inputClass} resize-none ${errors.message ? 'border-red-400 focus:ring-red-400' : ''}`} />
@@ -245,7 +240,7 @@ const ContactSection = () => {
                       {status === 'sending' ? (
                         <><Loader2 size={18} className="animate-spin" /> Mengirim...</>
                       ) : (
-                        <><Send size={16} /> Kirim ke hmluthfihm@gmail.com</>
+                        <><Send size={16} /> Kirim Pesan</>
                       )}
                     </motion.button>
                   </form>

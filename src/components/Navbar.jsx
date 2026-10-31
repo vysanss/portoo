@@ -5,6 +5,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 
 const navLinks = [
   { label: 'About', href: '#about' },
+  { label: 'P2MW 2024', href: '#p2mw' },
   { label: 'Skills', href: '#skills' },
   { label: 'Projects', href: '#projects' },
   { label: 'Contact', href: '#contact' },
@@ -31,7 +32,7 @@ const Navbar = () => {
         transition={{ duration: 0.6, ease: 'easeOut' }}
         className={`fixed top-0 left-0 right-0 z-50 w-full transition-all duration-300
           ${scrolled
-            ? 'backdrop-blur-xl bg-white/80 dark:bg-slate-900/80 border-b border-gray-200/50 dark:border-slate-800/50 shadow-sm'
+            ? 'backdrop-blur-xl bg-white/85 dark:bg-slate-900/85 border-b border-gray-200/50 dark:border-slate-800/50 shadow-sm'
             : 'bg-transparent border-b border-transparent'
           }`}
       >
@@ -48,12 +49,12 @@ const Navbar = () => {
             </motion.div>
 
             {/* Desktop Links */}
-            <div className="hidden md:flex items-center space-x-1">
+            <div className="hidden md:flex items-center space-x-0.5 lg:space-x-1">
               {navLinks.map(({ label, href }) => (
                 <a
                   key={label}
                   href={href}
-                  className="relative px-4 py-2 text-sm font-medium text-slate-600 hover:text-violet-600 dark:text-slate-300 dark:hover:text-violet-400 transition-colors duration-200 group"
+                  className="relative px-3 lg:px-4 py-2 text-xs lg:text-sm font-medium text-slate-600 hover:text-violet-600 dark:text-slate-300 dark:hover:text-violet-400 transition-colors duration-200 group"
                 >
                   {label}
                   <span className="absolute bottom-0 left-1/2 -translate-x-1/2 h-0.5 w-0 bg-violet-500 group-hover:w-4/5 transition-all duration-300 rounded-full" />
@@ -65,7 +66,7 @@ const Navbar = () => {
                 onClick={toggleTheme}
                 whileHover={{ scale: 1.1 }}
                 whileTap={{ scale: 0.9 }}
-                className="ml-4 p-2 rounded-full bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-200 hover:bg-violet-100 dark:hover:bg-violet-900/40 hover:text-violet-600 dark:hover:text-violet-400 transition-all duration-300"
+                className="ml-2 lg:ml-4 p-2 rounded-full bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-200 hover:bg-violet-100 dark:hover:bg-violet-900/40 hover:text-violet-600 dark:hover:text-violet-400 transition-all duration-300"
                 aria-label="Toggle Dark Mode"
               >
                 <AnimatePresence mode="wait" initial={false}>
@@ -122,27 +123,37 @@ const Navbar = () => {
       {/* Mobile Menu Drawer */}
       <AnimatePresence>
         {mobileOpen && (
-          <motion.div
-            key="mobile-menu"
-            initial={{ opacity: 0, y: -20 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -20 }}
-            transition={{ duration: 0.25 }}
-            className="fixed top-16 left-0 right-0 z-40 md:hidden backdrop-blur-xl bg-white/95 dark:bg-slate-900/95 border-b border-gray-200 dark:border-slate-800 shadow-lg"
-          >
-            <div className="flex flex-col px-6 py-4 space-y-1">
-              {navLinks.map(({ label, href }) => (
-                <a
-                  key={label}
-                  href={href}
-                  onClick={closeMobile}
-                  className="block py-3 text-base font-medium text-slate-700 dark:text-slate-200 hover:text-violet-600 dark:hover:text-violet-400 border-b border-slate-100 dark:border-slate-800 last:border-0 transition-colors"
-                >
-                  {label}
-                </a>
-              ))}
-            </div>
-          </motion.div>
+          <>
+            {/* Backdrop */}
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              onClick={closeMobile}
+              className="fixed inset-0 z-30 bg-black/40 backdrop-blur-xs md:hidden"
+            />
+            <motion.div
+              key="mobile-menu"
+              initial={{ opacity: 0, y: -20 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -20 }}
+              transition={{ duration: 0.25 }}
+              className="fixed top-16 left-0 right-0 z-40 md:hidden backdrop-blur-xl bg-white/95 dark:bg-slate-900/95 border-b border-gray-200 dark:border-slate-800 shadow-xl"
+            >
+              <div className="flex flex-col px-6 py-4 space-y-1">
+                {navLinks.map(({ label, href }) => (
+                  <a
+                    key={label}
+                    href={href}
+                    onClick={closeMobile}
+                    className="block py-3 text-base font-semibold text-slate-700 dark:text-slate-200 hover:text-violet-600 dark:hover:text-violet-400 border-b border-slate-100 dark:border-slate-800 last:border-0 transition-colors"
+                  >
+                    {label}
+                  </a>
+                ))}
+              </div>
+            </motion.div>
+          </>
         )}
       </AnimatePresence>
     </>

@@ -40,12 +40,12 @@ const RepoCard = ({ repo, index, featured = false }) => {
 
   return (
     <motion.div
-      initial={{ opacity: 0, y: 40 }}
+      initial={{ opacity: 0, y: 30 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: '-40px' }}
-      transition={{ duration: 0.5, delay: index * 0.07 }}
-      whileHover={{ y: -5 }}
-      className={`group flex flex-col rounded-2xl border overflow-hidden transition-all duration-300
+      transition={{ duration: 0.5, delay: index * 0.06 }}
+      whileHover={{ y: -4 }}
+      className={`group flex flex-col rounded-3xl border overflow-hidden transition-all duration-300
         ${featured
           ? 'bg-gradient-to-br from-violet-50 via-white to-cyan-50 dark:from-violet-900/20 dark:via-slate-800/80 dark:to-cyan-900/20 border-violet-300 dark:border-violet-700 shadow-lg shadow-violet-100 dark:shadow-violet-900/20'
           : 'bg-white dark:bg-slate-800/60 border-slate-200 dark:border-slate-700 hover:border-violet-300 dark:hover:border-violet-700 hover:shadow-lg'
@@ -53,32 +53,32 @@ const RepoCard = ({ repo, index, featured = false }) => {
     >
       <div className={`h-1 w-full ${featured ? 'bg-gradient-to-r from-violet-500 to-cyan-500' : 'bg-slate-200 dark:bg-slate-700 group-hover:bg-gradient-to-r group-hover:from-violet-500 group-hover:to-cyan-500'} transition-all duration-500`} />
 
-      <div className="flex flex-col flex-1 p-5">
+      <div className="flex flex-col flex-1 p-5 sm:p-6">
         {/* Header */}
         <div className="flex items-start justify-between gap-2 mb-3">
           <div className="flex items-center gap-2 min-w-0">
-            <BookOpen size={15} className="text-violet-500 flex-shrink-0" />
-            <h3 className="text-sm font-bold text-slate-900 dark:text-white leading-snug group-hover:text-violet-700 dark:group-hover:text-violet-300 transition-colors truncate">
+            <BookOpen size={16} className="text-violet-500 flex-shrink-0" />
+            <h3 className="text-sm sm:text-base font-bold text-slate-900 dark:text-white leading-snug group-hover:text-violet-700 dark:group-hover:text-violet-300 transition-colors truncate">
               {formatRepoName(repo.name)}
             </h3>
           </div>
           {featured && (
-            <span className="flex-shrink-0 flex items-center gap-1 px-2 py-0.5 rounded-full bg-gradient-to-r from-violet-600 to-cyan-500 text-white text-xs font-bold">
+            <span className="flex-shrink-0 flex items-center gap-1 px-2.5 py-0.5 rounded-full bg-gradient-to-r from-violet-600 to-cyan-500 text-white text-[11px] font-bold">
               <Star size={9} fill="currentColor" /> Featured
             </span>
           )}
         </div>
 
         {/* Description */}
-        <p className="text-xs text-slate-500 dark:text-slate-400 leading-relaxed flex-1 mb-4 line-clamp-2">
-          {repo.description || descriptionFallback[repo.name] || 'Repository GitHub.'}
+        <p className="text-xs sm:text-sm text-slate-500 dark:text-slate-400 leading-relaxed flex-1 mb-4 line-clamp-3">
+          {repo.description || descriptionFallback[repo.name] || 'Repository GitHub Muhamad Luthfi Hamdani.'}
         </p>
 
         {/* Footer */}
-        <div className="flex items-center justify-between">
+        <div className="flex items-center justify-between pt-3 border-t border-slate-100 dark:border-slate-700/60">
           <div className="flex items-center gap-3 text-xs text-slate-500 dark:text-slate-400">
             {repo.language && (
-              <span className="flex items-center gap-1">
+              <span className="flex items-center gap-1.5 font-medium">
                 <span className={`w-2.5 h-2.5 rounded-full ${langColor.dot}`} />
                 {repo.language}
               </span>
@@ -137,19 +137,19 @@ const ProjectsSection = () => {
   useEffect(() => { fetchRepos(); }, []);
 
   return (
-    <section id="projects" className="py-24 px-4">
+    <section id="projects" className="py-20 sm:py-24 px-4 overflow-hidden">
       <div className="max-w-6xl mx-auto">
         <motion.div
           ref={ref}
           initial={{ opacity: 0, y: 30 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.6 }}
-          className="text-center mb-16"
+          className="text-center mb-12 sm:mb-16"
         >
-          <p className="text-sm font-semibold tracking-widest uppercase text-violet-600 dark:text-violet-400 mb-3">
-            Portfolio
+          <p className="text-xs sm:text-sm font-semibold tracking-widest uppercase text-violet-600 dark:text-violet-400 mb-2 sm:mb-3">
+            Portfolio Teknis
           </p>
-          <h2 className="text-4xl sm:text-5xl font-bold text-slate-900 dark:text-white mb-4">
+          <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-slate-900 dark:text-white mb-3 sm:mb-4">
             GitHub Repositories
           </h2>
           <div className="w-16 h-1 bg-gradient-to-r from-violet-600 to-cyan-500 rounded-full mx-auto mb-4" />
@@ -157,7 +157,7 @@ const ProjectsSection = () => {
             href="https://github.com/vysanss"
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center gap-2 text-sm text-slate-500 dark:text-slate-400 hover:text-violet-600 dark:hover:text-violet-400 transition-colors"
+            className="inline-flex items-center gap-2 text-xs sm:text-sm text-slate-500 dark:text-slate-400 hover:text-violet-600 dark:hover:text-violet-400 transition-colors"
           >
             <Code2 size={14} />
             github.com/vysanss
@@ -178,7 +178,7 @@ const ProjectsSection = () => {
           <div className="flex justify-center py-16">
             <div className="text-center">
               <p className="text-slate-500 dark:text-slate-400 mb-4">Gagal memuat repository.</p>
-              <button onClick={fetchRepos} className="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-violet-100 dark:bg-violet-900/30 text-violet-700 dark:text-violet-300 text-sm font-medium hover:bg-violet-200 transition-colors">
+              <button onClick={fetchRepos} className="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-violet-100 dark:bg-violet-900/30 text-violet-700 dark:text-violet-300 text-sm font-medium hover:bg-violet-200 transition-colors">
                 <RefreshCw size={14} /> Coba lagi
               </button>
             </div>

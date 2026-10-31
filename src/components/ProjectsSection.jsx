@@ -109,7 +109,7 @@ const RepoCard = ({ repo, index, featured = false }) => {
   );
 };
 
-const FEATURED = 'project-kp-satpol-pp';
+const FEATURED = 'ecoscope_wonosobo';
 
 const ProjectsSection = () => {
   const ref = useRef(null);

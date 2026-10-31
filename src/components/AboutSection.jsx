@@ -43,13 +43,13 @@ const AboutSection = () => {
             {/* Text Content */}
             <motion.div variants={fadeUp} className="space-y-6">
               <p className="text-lg text-slate-600 dark:text-slate-300 leading-relaxed">
-                Halo! Saya seorang mahasiswa <strong className="text-slate-900 dark:text-white">S1 Rekayasa Perangkat Lunak</strong> yang memiliki ketertarikan mendalam pada dunia <strong className="text-violet-600 dark:text-violet-400">Backend Development</strong> dan pengembangan sistem perangkat lunak secara terstruktur.
+                Halo! Saya seorang <strong className="text-violet-600 dark:text-violet-400">Full stack Developer</strong> dengan latar belakang pendidikan <strong className="text-slate-900 dark:text-white">S1 Rekayasa Perangkat Lunak</strong> .Saya memiliki ketertarikan pada pengembangan aplikasi web, mulai dari perancangan antarmuka, pengembangan backend, pengelolaan database, hingga membangun sistem yang fungsional dan mudah digunakan.
               </p>
               <p className="text-lg text-slate-600 dark:text-slate-300 leading-relaxed">
-                Saya percaya bahwa fondasi sistem yang kuat—mulai dari arsitektur database, desain API, hingga alur pengujian—adalah kunci dari produk digital yang andal dan skalabel. Saya tidak hanya menulis kode; saya membangun solusi yang <em className="text-cyan-600 dark:text-cyan-400">efisien, terukur, dan mudah dipelihara</em>.
+                Saya terbiasa mengembangkan aplikasi menggunakan berbagai teknologi seperti JavaScript, PHP, Python, Laravel, dan berbagai teknologi web lainnya. Saya menikmati proses membangun solusi digital, memecahkan masalah teknis, serta mengembangkan sistem yang <em className="text-cyan-600 dark:text-cyan-400">efisien, terukur, dan mudah dipelihara</em>.
               </p>
               <p className="text-lg text-slate-600 dark:text-slate-300 leading-relaxed">
-                Di luar kode, saya aktif mempelajari pola arsitektur modern dan metodologi pengembangan seperti <strong className="text-slate-900 dark:text-white">Waterfall</strong> untuk memastikan setiap fase proyek berjalan dengan terencana.
+                Di luar dunia teknologi, saya juga memiliki pengalaman bekerja sebagai <strong className="text-slate-900 dark:text-white">Barista</strong> dan Kasir di industri coffee shop. Saya terbiasa menangani pelayanan pelanggan, mengoperasikan kasir, melakukan pembukuan transaksi pada akhir shift, serta membuat konten kreatif untuk kebutuhan media sosial. Pengalaman ini membentuk kemampuan komunikasi, kerja sama tim, ketelitian, dan adaptasi saya dalam lingkungan kerja.
               </p>
 
               <motion.div

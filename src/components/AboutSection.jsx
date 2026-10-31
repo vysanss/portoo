@@ -13,10 +13,10 @@ const AboutSection = () => {
   const isInView = useInView(ref, { once: true, margin: '-100px' });
 
   const highlights = [
-    { icon: Code2, label: 'Full Stack Developer', desc: 'Frontend, backend & web development' },
-    { icon: Layers, label: 'System Development', desc: 'API design, database & system architecture' },
-    { icon: Coffee, label: 'Barista & Coffee Enthusiast', desc: 'Coffee brewing & customer service' },
-    { icon: Sparkles, label: 'Creative & Adaptable', desc: 'Problem solving, teamwork & creativity' },
+    { icon: Code2, label: 'Backend Focus', desc: 'API design & sistem arsitektur' },
+    { icon: Layers, label: 'Terstruktur', desc: 'Metodologi pengembangan yang rapi' },
+    { icon: BookOpen, label: 'Mahasiswa S1', desc: 'Rekayasa Perangkat Lunak' },
+    { icon: Sparkles, label: 'Quality First', desc: 'Testing & code quality selalu utama' },
   ];
 
   return (
@@ -44,18 +44,11 @@ const AboutSection = () => {
             <motion.div variants={fadeUp} className="space-y-6">
               <p className="text-lg text-slate-600 dark:text-slate-300 leading-relaxed">
                 Halo! Saya seorang <strong className="text-violet-600 dark:text-violet-400">Full stack Developer</strong> dengan latar belakang pendidikan <strong className="text-slate-900 dark:text-white">S1 Rekayasa Perangkat Lunak</strong> .Saya memiliki ketertarikan pada pengembangan aplikasi web, mulai dari perancangan antarmuka, pengembangan backend, pengelolaan database, hingga membangun sistem yang fungsional dan mudah digunakan.
-<<<<<<< HEAD
               </p>
               <p className="text-lg text-slate-600 dark:text-slate-300 leading-relaxed">
                 Saya terbiasa mengembangkan aplikasi menggunakan berbagai teknologi seperti JavaScript, PHP, Python, Laravel, dan berbagai teknologi web lainnya. Saya menikmati proses membangun solusi digital, memecahkan masalah teknis, serta mengembangkan sistem yang <em className="text-cyan-600 dark:text-cyan-400">efisien, terukur, dan mudah dipelihara</em>.
               </p>
               <p className="text-lg text-slate-600 dark:text-slate-300 leading-relaxed">
-=======
-              <p className="text-lg text-slate-600 dark:text-slate-300 leading-relaxed">
-                Saya terbiasa mengembangkan aplikasi menggunakan berbagai teknologi seperti JavaScript, PHP, Python, Laravel, dan berbagai teknologi web lainnya. Saya menikmati proses membangun solusi digital, memecahkan masalah teknis, serta mengembangkan sistem yang <em className="text-cyan-600 dark:text-cyan-400">efisien, terukur, dan mudah dipelihara</em>.
-              </p>
-              <p className="text-lg text-slate-600 dark:text-slate-300 leading-relaxed">
->>>>>>> 786a54896a6aa1f4a0a9453c223e89a824f6d6e3
                 Di luar dunia teknologi, saya juga memiliki pengalaman bekerja sebagai <strong className="text-slate-900 dark:text-white">Barista</strong> dan Kasir di industri coffee shop. Saya terbiasa menangani pelayanan pelanggan, mengoperasikan kasir, melakukan pembukuan transaksi pada akhir shift, serta membuat konten kreatif untuk kebutuhan media sosial. Pengalaman ini membentuk kemampuan komunikasi, kerja sama tim, ketelitian, dan adaptasi saya dalam lingkungan kerja.
               </p>
 

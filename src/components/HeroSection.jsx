@@ -133,7 +133,7 @@ const HeroSection = () => {
               variants={fadeUp} initial="hidden" animate="visible" custom={2}
               className="text-lg text-slate-600 dark:text-slate-400 mb-8 leading-relaxed"
             >
-              Backend Developer & Software Engineer •{' '}
+              Full-Stack Developer & Software Engineer •{' '}
               <span className="font-medium text-slate-700 dark:text-slate-300">Telkom University</span>
             </motion.p>
 

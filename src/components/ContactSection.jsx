@@ -95,6 +95,18 @@ const ContactSection = () => {
     if (errors[name]) setErrors(prev => ({ ...prev, [name]: undefined }));
   };
 
+  // Helper: buka Account Chooser Gmail dengan pesan yang sudah terisi
+  const openGmail = () => {
+    const subject = `[Portfolio] Pesan dari ${form.name}`;
+    const body = `Halo Luthfi,\n\nNama: ${form.name}\nEmail Pengirim: ${form.email}\n\nPesan:\n${form.message}\n\n---\nDikirim melalui formulir portofolio`;
+    const encodedSubject = encodeURIComponent(subject);
+    const encodedBody = encodeURIComponent(body);
+    const gmailComposeUrl = `https://mail.google.com/mail/?view=cm&fs=1&to=hmluthfihm@gmail.com&su=${encodedSubject}&body=${encodedBody}`;
+    const accountChooserUrl = `https://accounts.google.com/AccountChooser?continue=${encodeURIComponent(gmailComposeUrl)}`;
+    const win = window.open(accountChooserUrl, '_blank');
+    if (!win) window.location.href = `mailto:hmluthfihm@gmail.com?subject=${encodedSubject}&body=${encodedBody}`;
+  };
+
   const handleSubmit = (e) => {
     e.preventDefault();
     const errs = validate();
@@ -106,19 +118,23 @@ const ContactSection = () => {
     const encodedSubject = encodeURIComponent(subject);
     const encodedBody = encodeURIComponent(body);
 
-    const gmailUrl = `https://mail.google.com/mail/?view=cm&fs=1&to=hmluthfihm@gmail.com&su=${encodedSubject}&body=${encodedBody}`;
+    const gmailComposeUrl = `https://mail.google.com/mail/?view=cm&fs=1&to=hmluthfihm@gmail.com&su=${encodedSubject}&body=${encodedBody}`;
     const mailtoUrl = `mailto:hmluthfihm@gmail.com?subject=${encodedSubject}&body=${encodedBody}`;
+
+    // Gunakan Account Chooser agar user bisa pilih akun Gmail terlebih dahulu
+    const accountChooserUrl = `https://accounts.google.com/AccountChooser?continue=${encodeURIComponent(gmailComposeUrl)}`;
 
     setStatus('success');
 
-    // On mobile devices, mailto directly invokes the Gmail / Mail native app
     const isMobile = typeof navigator !== 'undefined' && /Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
     if (isMobile) {
+      // Mobile: langsung buka mailto (native mail app)
       window.location.href = mailtoUrl;
     } else {
-      // Desktop: Open Gmail web compose in a new tab
-      const win = window.open(gmailUrl, '_blank');
+      // Desktop: buka Account Chooser dulu → lalu redirect ke Gmail compose
+      const win = window.open(accountChooserUrl, '_blank');
       if (!win) {
+        // Fallback jika popup diblokir
         window.location.href = mailtoUrl;
       }
     }
@@ -201,22 +217,15 @@ const ContactSection = () => {
                     </div>
 
                     <div className="flex flex-col sm:flex-row items-center gap-2 pt-2 w-full sm:w-auto">
-                      <a
-                        href={`https://mail.google.com/mail/?view=cm&fs=1&to=hmluthfihm@gmail.com&su=${encodeURIComponent(`[Portfolio] Pesan dari ${form.name}`)}&body=${encodeURIComponent(`Halo Luthfi,\n\nNama: ${form.name}\nEmail Pengirim: ${form.email}\n\nPesan:\n${form.message}\n\n---\nDikirim melalui formulir portofolio`)}`}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="w-full sm:w-auto inline-flex items-center justify-center gap-1.5 px-4 py-2.5 rounded-xl bg-violet-600 hover:bg-violet-700 text-white text-xs font-semibold shadow-md shadow-violet-500/20 transition-all"
+                      <button
+                        onClick={openGmail}
+                        className="w-full sm:w-auto inline-flex items-center justify-center gap-1.5 px-4 py-2.5 rounded-xl bg-violet-600 hover:bg-violet-700 text-white text-xs font-semibold shadow-md shadow-violet-500/20 transition-all cursor-pointer"
                       >
                         <Mail size={14} />
-                        Buka di Gmail Web
+                        Pilih Akun &amp; Kirim Gmail
                         <ExternalLink size={12} />
-                      </a>
-                      <a
-                        href={`mailto:hmluthfihm@gmail.com?subject=${encodeURIComponent(`[Portfolio] Pesan dari ${form.name}`)}&body=${encodeURIComponent(`Halo Luthfi,\n\nNama: ${form.name}\nEmail Pengirim: ${form.email}\n\nPesan:\n${form.message}\n\n---\nDikirim melalui formulir portofolio`)}`}
-                        className="w-full sm:w-auto inline-flex items-center justify-center gap-1.5 px-4 py-2.5 rounded-xl bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 text-xs font-semibold transition-colors"
-                      >
-                        Buka Aplikasi Email
-                      </a>
+                      </button>
+
                     </div>
 
                     <button

@@ -1,7 +1,7 @@
 import { useState, useRef } from 'react';
 import { motion } from 'framer-motion';
 import { useInView } from 'framer-motion';
-import { Send, Mail, CheckCircle, AlertCircle, Loader2 } from 'lucide-react';
+import { Send, Mail, CheckCircle, AlertCircle, ExternalLink } from 'lucide-react';
 
 // ── Social link data ───────────────────────────────────────────────
 const socialLinks = [
@@ -77,7 +77,7 @@ const ContactSection = () => {
 
   const [form, setForm] = useState({ name: '', email: '', message: '' });
   const [errors, setErrors] = useState({});
-  const [status, setStatus] = useState('idle'); // idle | sending | success | error
+  const [status, setStatus] = useState('idle'); // idle | success
 
   const validate = () => {
     const e = {};
@@ -95,35 +95,32 @@ const ContactSection = () => {
     if (errors[name]) setErrors(prev => ({ ...prev, [name]: undefined }));
   };
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
     const errs = validate();
     if (Object.keys(errs).length > 0) { setErrors(errs); return; }
-    setStatus('sending');
-    try {
-      const res = await fetch('https://formspree.io/f/xwpbqrzb', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
-        body: JSON.stringify({
-          name: form.name,
-          email: form.email,
-          message: form.message,
-          _replyto: form.email,
-          _subject: `[Portfolio] Pesan dari ${form.name}`,
-        }),
-      });
-      if (res.ok) {
-        setStatus('success');
-        setForm({ name: '', email: '', message: '' });
-      } else {
-        const mailtoUrl = `mailto:hmluthfihm@gmail.com?subject=${encodeURIComponent(`[Portfolio] Pesan dari ${form.name}`)}&body=${encodeURIComponent(`Nama: ${form.name}\nEmail: ${form.email}\n\n${form.message}`)}`;
-        window.location.href = mailtoUrl;
-        setStatus('success');
-      }
-    } catch {
-      const mailtoUrl = `mailto:hmluthfihm@gmail.com?subject=${encodeURIComponent(`[Portfolio] Pesan dari ${form.name}`)}&body=${encodeURIComponent(`Nama: ${form.name}\nEmail: ${form.email}\n\n${form.message}`)}`;
+
+    const subject = `[Portfolio] Pesan dari ${form.name}`;
+    const body = `Halo Luthfi,\n\nNama: ${form.name}\nEmail Pengirim: ${form.email}\n\nPesan:\n${form.message}\n\n---\nDikirim melalui formulir portofolio`;
+
+    const encodedSubject = encodeURIComponent(subject);
+    const encodedBody = encodeURIComponent(body);
+
+    const gmailUrl = `https://mail.google.com/mail/?view=cm&fs=1&to=hmluthfihm@gmail.com&su=${encodedSubject}&body=${encodedBody}`;
+    const mailtoUrl = `mailto:hmluthfihm@gmail.com?subject=${encodedSubject}&body=${encodedBody}`;
+
+    setStatus('success');
+
+    // On mobile devices, mailto directly invokes the Gmail / Mail native app
+    const isMobile = typeof navigator !== 'undefined' && /Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
+    if (isMobile) {
       window.location.href = mailtoUrl;
-      setStatus('success');
+    } else {
+      // Desktop: Open Gmail web compose in a new tab
+      const win = window.open(gmailUrl, '_blank');
+      if (!win) {
+        window.location.href = mailtoUrl;
+      }
     }
   };
 
@@ -184,25 +181,50 @@ const ContactSection = () => {
               <div className="p-5 sm:p-8 rounded-3xl bg-white dark:bg-slate-800/60 border border-slate-200 dark:border-slate-700 shadow-sm">
                 <p className="text-xs text-slate-400 dark:text-slate-500 mb-4 flex items-center gap-1.5">
                   <Mail size={12} className="flex-shrink-0" />
-                  <span>Pesan akan dikirim langsung ke <span className="font-semibold text-violet-500">hmluthfihm@gmail.com</span></span>
+                  <span>Pesan langsung diteruskan ke Gmail: <span className="font-semibold text-violet-500">hmluthfihm@gmail.com</span></span>
                 </p>
 
                 {status === 'success' ? (
                   <motion.div
                     initial={{ opacity: 0, scale: 0.9 }}
                     animate={{ opacity: 1, scale: 1 }}
-                    className="flex flex-col items-center justify-center gap-4 py-10 text-center"
+                    className="flex flex-col items-center justify-center gap-4 py-8 text-center"
                   >
                     <div className="w-16 h-16 rounded-full bg-emerald-100 dark:bg-emerald-900/30 flex items-center justify-center">
                       <CheckCircle size={32} className="text-emerald-600 dark:text-emerald-400" />
                     </div>
-                    <h3 className="text-xl font-bold text-slate-900 dark:text-white">Pesan Terkirim!</h3>
-                    <p className="text-slate-500 dark:text-slate-400 text-sm">
-                      Terima kasih! Saya akan segera membalas pesanmu.
-                    </p>
+                    <div className="space-y-1">
+                      <h3 className="text-xl font-bold text-slate-900 dark:text-white">Mengarahkan ke Gmail!</h3>
+                      <p className="text-slate-500 dark:text-slate-400 text-xs sm:text-sm max-w-sm mx-auto leading-relaxed">
+                        Halaman compose Gmail telah dibuka dengan subjek, email pengirim ({form.email}), dan pesan Anda yang sudah terisi otomatis.
+                      </p>
+                    </div>
+
+                    <div className="flex flex-col sm:flex-row items-center gap-2 pt-2 w-full sm:w-auto">
+                      <a
+                        href={`https://mail.google.com/mail/?view=cm&fs=1&to=hmluthfihm@gmail.com&su=${encodeURIComponent(`[Portfolio] Pesan dari ${form.name}`)}&body=${encodeURIComponent(`Halo Luthfi,\n\nNama: ${form.name}\nEmail Pengirim: ${form.email}\n\nPesan:\n${form.message}\n\n---\nDikirim melalui formulir portofolio`)}`}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="w-full sm:w-auto inline-flex items-center justify-center gap-1.5 px-4 py-2.5 rounded-xl bg-violet-600 hover:bg-violet-700 text-white text-xs font-semibold shadow-md shadow-violet-500/20 transition-all"
+                      >
+                        <Mail size={14} />
+                        Buka di Gmail Web
+                        <ExternalLink size={12} />
+                      </a>
+                      <a
+                        href={`mailto:hmluthfihm@gmail.com?subject=${encodeURIComponent(`[Portfolio] Pesan dari ${form.name}`)}&body=${encodeURIComponent(`Halo Luthfi,\n\nNama: ${form.name}\nEmail Pengirim: ${form.email}\n\nPesan:\n${form.message}\n\n---\nDikirim melalui formulir portofolio`)}`}
+                        className="w-full sm:w-auto inline-flex items-center justify-center gap-1.5 px-4 py-2.5 rounded-xl bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 text-xs font-semibold transition-colors"
+                      >
+                        Buka Aplikasi Email
+                      </a>
+                    </div>
+
                     <button
-                      onClick={() => setStatus('idle')}
-                      className="mt-2 text-sm font-medium text-violet-600 dark:text-violet-400 hover:underline"
+                      onClick={() => {
+                        setStatus('idle');
+                        setForm({ name: '', email: '', message: '' });
+                      }}
+                      className="mt-2 text-xs font-medium text-violet-600 dark:text-violet-400 hover:underline"
                     >
                       Kirim pesan lain
                     </button>
@@ -217,7 +239,7 @@ const ContactSection = () => {
                       {errors.name && <p className="mt-1.5 text-xs text-red-500 flex items-center gap-1"><AlertCircle size={12} />{errors.name}</p>}
                     </div>
                     <div>
-                      <label className="block text-xs sm:text-sm font-semibold text-slate-700 dark:text-slate-300 mb-1.5">Email</label>
+                      <label className="block text-xs sm:text-sm font-semibold text-slate-700 dark:text-slate-300 mb-1.5">Email Anda</label>
                       <input type="email" name="email" value={form.email} onChange={handleChange}
                         placeholder="john@example.com"
                         className={`${inputClass} ${errors.email ? 'border-red-400 focus:ring-red-400' : ''}`} />
@@ -232,16 +254,11 @@ const ContactSection = () => {
                     </div>
                     <motion.button
                       type="submit"
-                      disabled={status === 'sending'}
-                      whileHover={{ scale: status === 'idle' ? 1.02 : 1 }}
+                      whileHover={{ scale: 1.02 }}
                       whileTap={{ scale: 0.98 }}
-                      className="w-full inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-xl bg-gradient-to-r from-violet-600 to-cyan-500 text-white font-semibold text-sm shadow-lg shadow-violet-500/25 hover:shadow-violet-500/40 transition-all duration-300 disabled:opacity-70"
+                      className="w-full inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-xl bg-gradient-to-r from-violet-600 to-cyan-500 text-white font-semibold text-sm shadow-lg shadow-violet-500/25 hover:shadow-violet-500/40 transition-all duration-300 cursor-pointer"
                     >
-                      {status === 'sending' ? (
-                        <><Loader2 size={18} className="animate-spin" /> Mengirim...</>
-                      ) : (
-                        <><Send size={16} /> Kirim Pesan</>
-                      )}
+                      <Send size={16} /> Kirim Pesan ke Gmail
                     </motion.button>
                   </form>
                 )}

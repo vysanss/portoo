@@ -43,8 +43,14 @@ const Navbar = () => {
               whileHover={{ scale: 1.05 }}
               className="flex-shrink-0"
             >
-              <a href="#" className="text-xl font-bold bg-gradient-to-r from-violet-600 to-cyan-500 bg-clip-text text-transparent select-none">
-                {'<Dev />'}
+              <a href="#" className="flex items-center gap-2.5 text-lg sm:text-xl font-bold bg-gradient-to-r from-violet-600 to-cyan-500 bg-clip-text text-transparent select-none">
+                <img
+                  src="/web-icon.png"
+                  alt="Muhamad Luthfi Hamdani"
+                  className="w-8 h-8 rounded-full object-cover border border-violet-400/50 shadow-sm"
+                />
+                <span className="hidden sm:inline">{'<Muhamad Luthfi Hamdani />'}</span>
+                <span className="sm:hidden">{'<Luthfi />'}</span>
               </a>
             </motion.div>
 
